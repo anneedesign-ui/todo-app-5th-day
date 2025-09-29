@@ -14,7 +14,7 @@ function App() {
     <div className="app">
       <header className="app-header">
         <h1>Todo 관리 앱</h1>
-        <p>할 일을 효율적으로 관리해보세요!</p>
+        <p>할 일을 효율적으로 관리해보세요.</p>
         <TimeDisplay />
         <QuoteComponent />
       </header>
