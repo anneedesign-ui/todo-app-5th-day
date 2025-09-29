@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import TimeDisplay from "./TimeDisplay";
+import QuoteComponent from "./QuoteComponent";
 import "./App.css";
 
 function App() {
@@ -11,10 +13,11 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>📝 Todo 관리 앱</h1>
+        <h1>Todo 관리 앱</h1>
         <p>할 일을 효율적으로 관리해보세요!</p>
+        <TimeDisplay />
+        <QuoteComponent />
       </header>
-
       <div className="container">
         <TodoInput todoList={todoList} setTodoList={setTodoList} />
         <TodoList todoList={todoList} setTodoList={setTodoList} />
@@ -25,24 +28,27 @@ function App() {
 
 function TodoInput({ todoList, setTodoList }) {
   const [inputValue, setInputValue] = useState("");
+  const inputRef = useRef(null);
 
   return (
     <div className="todo-input">
       <input
+        ref={inputRef}
         value={inputValue}
-        onChange={(event) => setInputValue(event.target.value)}
+        onChange={(e) => setInputValue(e.target.value)}
         placeholder="새로운 할 일을 입력하세요"
       />
       <button
         onClick={() => {
+          if (!inputValue.trim()) return; // 빈 값 방지
           const newTodo = {
-            id: Number(new Date()),
+            id: Date.now(),
             content: inputValue,
             completed: false,
           };
-          const newTodoList = [...todoList, newTodo];
-          setTodoList(newTodoList);
+          setTodoList([...todoList, newTodo]);
           setInputValue("");
+          if (inputRef.current) inputRef.current.focus();
         }}
       >
         추가하기
@@ -65,56 +71,53 @@ function Todo({ todo, setTodoList }) {
   const [isEditing, setIsEditing] = useState(false);
   const [inputValue, setInputValue] = useState(todo.content);
 
+  const handleToggleComplete = () => {
+    setTodoList((prev) =>
+      prev.map((el) =>
+        el.id === todo.id ? { ...el, completed: !el.completed } : el
+      )
+    );
+  };
+
+  const handleEditSave = () => {
+    if (isEditing) {
+      setTodoList((prev) =>
+        prev.map((el) =>
+          el.id === todo.id ? { ...el, content: inputValue } : el
+        )
+      );
+    }
+    setIsEditing((prev) => !prev);
+  };
+
+  const handleDelete = () => {
+    setTodoList((prev) => prev.filter((el) => el.id !== todo.id));
+  };
+
+  const handleInputKeyDown = (e) => {
+    if (e.key === "Enter") handleEditSave();
+  };
+
   return (
     <li className={`todo-item ${todo.completed ? "completed" : ""}`}>
       <input
         type="checkbox"
         checked={todo.completed}
-        onChange={() => {
-          setTodoList((prev) =>
-            prev.map((el) =>
-              el.id === todo.id ? { ...el, completed: !el.completed } : el
-            )
-          );
-        }}
+        onChange={handleToggleComplete}
       />
-
       {isEditing ? (
         <input
           value={inputValue}
-          onChange={(event) => setInputValue(event.target.value)}
-          onBlur={() => setIsEditing(false)}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleInputKeyDown}
           autoFocus
         />
       ) : (
         <span>{todo.content}</span>
       )}
-
       <div className="todo-buttons">
-        <button
-          onClick={() => {
-            if (isEditing) {
-              setTodoList((prev) =>
-                prev.map((el) =>
-                  el.id === todo.id ? { ...el, content: inputValue } : el
-                )
-              );
-            }
-            setIsEditing(!isEditing);
-          }}
-        >
-          {isEditing ? "저장" : "수정"}
-        </button>
-
-        <button
-          onClick={() => {
-            setTodoList((prev) => {
-              return prev.filter((el) => el.id !== todo.id);
-            });
-          }}
-        >
-          삭제
-        </button>
+        <button onClick={handleEditSave}>{isEditing ? "저장" : "수정"}</button>
+        <button onClick={handleDelete}>삭제</button>
       </div>
     </li>
   );

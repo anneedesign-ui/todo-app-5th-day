@@ -1,234 +1,177 @@
-/* 미니멀하고 담백한 디자인 - 수정 버전 */
-
-* {
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-  background-color: #f8f9fa;
-  color: #212529;
-  line-height: 1.6;
+  background: #f7f7fa;
 }
 
 .app {
   min-height: 100vh;
-  padding: 40px 20px;
-  max-width: 600px;
-  margin: 0 auto;
+  min-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f7f7fa;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #222;
 }
 
 .app-header {
   text-align: center;
-  margin-bottom: 40px;
-  padding: 0;
-  background: none;
-  box-shadow: none;
+  margin-bottom: 30px;
 }
 
 .app-header h1 {
-  font-size: 2rem;
-  font-weight: 300;
-  color: #495057;
-  margin-bottom: 8px;
-  letter-spacing: -0.5px;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 10px;
+}
+.app-header p {
+  color: #64677a;
+  font-size: 1.05rem;
+  margin-bottom: 1.1rem;
 }
 
-.app-header p {
-  font-size: 0.95rem;
-  color: #868e96;
-  font-weight: 400;
+.time-area {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(60, 80, 120, 0.07);
+  padding: 13px 32px;
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  display: inline-block;
+  color: #23386b;
+}
+
+.quote-area {
+  background: #eef3fa;
+  border-radius: 9px;
+  box-shadow: 0 1.5px 6px rgba(120, 150, 170, 0.08);
+  padding: 14px 22px;
+  margin-bottom: 20px;
+  min-width: 290px;
+  font-size: 1.08rem;
+  color: #344262;
+  text-align: center;
+}
+.quote-area button {
+  margin-top: 9px;
+  padding: 6px 14px;
+  background: #397cf6;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.96rem;
+  cursor: pointer;
+  transition: background 0.14s;
+}
+.quote-area button:hover {
+  background: #254fa3;
 }
 
 .container {
-  background: white;
-  border-radius: 12px;
-  padding: 32px;
-  border: 1px solid #e9ecef;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  width: 100vw;
+  max-width: 390px;
+  margin: 0 auto;
 }
 
 .todo-input {
   display: flex;
-  gap: 12px;
-  margin-bottom: 32px;
-  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
 }
-
-.input-field {
+.todo-input input {
   flex: 1;
-  padding: 12px 16px;
-  border: 1.5px solid #dee2e6;
+  padding: 8px 12px;
+  border: 1px solid #d4d8e2;
   border-radius: 8px;
-  font-size: 0.95rem;
-  background: #ffffff;
-  color: #495057; /* 수정: 텍스트 색상 명시 */
-  transition: border-color 0.2s ease;
-}
-
-.input-field:focus {
+  font-size: 1.03rem;
+  background: #f9fbfc;
   outline: none;
-  border-color: #6c757d;
+  transition: border 0.14s;
 }
-
-.input-field::placeholder {
-  color: #adb5bd;
+.todo-input input:focus {
+  border-color: #397cf6;
+  background: #f2f7ff;
 }
-
-.btn {
-  padding: 12px 20px;
-  border: 1.5px solid;
+.todo-input button {
+  padding: 7px 18px;
+  background: #397cf6;
+  border: none;
+  color: #fff;
   border-radius: 8px;
-  font-size: 0.9rem;
+  font-size: 1.08rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
-  background: white;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  transition: background 0.16s;
 }
-
-.btn:hover {
-  transform: translateY(-1px);
-}
-
-.btn-add {
-  background: #6c757d; /* 수정: 검정 → 연그레이 */
-  color: white;
-  border-color: #6c757d;
-}
-
-.btn-add:hover {
-  background: #5a6268;
-  border-color: #5a6268;
-}
-
-.btn-edit {
-  background: white;
-  color: #495057;
-  border-color: #ced4da;
-  padding: 8px 14px;
-  font-size: 0.85rem;
-}
-
-.btn-edit:hover {
-  background: #f8f9fa;
-  border-color: #adb5bd;
-}
-
-.btn-delete {
-  background: white;
-  color: #dc3545;
-  border-color: #f5c6cb;
-  padding: 8px 14px;
-  font-size: 0.85rem;
-}
-
-.btn-delete:hover {
-  background: #f8d7da;
-  border-color: #f5c6cb;
-}
-
-.btn-save {
-  background: #6c757d; /* 수정: 검정 → 연그레이 */
-  color: white;
-  border-color: #6c757d;
-  padding: 8px 14px;
-  font-size: 0.85rem;
-}
-
-.btn-save:hover {
-  background: #5a6268;
-}
-
-.btn-cancel {
-  background: white;
-  color: #6c757d;
-  border-color: #ced4da;
-  padding: 8px 14px;
-  font-size: 0.85rem;
-}
-
-.btn-cancel:hover {
-  background: #f8f9fa;
+.todo-input button:hover {
+  background: #254fa3;
 }
 
 .todo-list {
-  min-height: 200px;
-}
-
-.empty-message {
-  text-align: center;
-  color: #adb5bd;
-  font-style: normal;
-  padding: 60px 20px;
-  font-size: 0.95rem;
-}
-
-.todo-items {
+  width: 100%;
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  padding: 0;
+  margin: 0;
 }
 
 .todo-item {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 18px 20px;
-  background: #f8f9fa;
-  border-radius: 10px;
-  border: 1px solid #e9ecef;
-  transition: all 0.2s ease;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 7px;
+  padding: 10px 15px;
+  margin-bottom: 9px;
+  box-shadow: 0 1px 3px rgba(100, 110, 140, 0.03);
+  font-size: 1.06rem;
+  color: #222;
+  min-height: 40px;
+  transition: box-shadow 0.17s;
 }
-
-.todo-item:hover {
-  background: #f1f3f4;
-  border-color: #ced4da;
-}
-
 .todo-item.completed {
-  background: #f8f9fa;
-  border-color: #d1ecf1;
-}
-
-.checkbox {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
-  accent-color: #495057;
-}
-
-.todo-content {
-  flex: 1;
-  display: flex;
-  align-items: center;
-}
-
-.todo-text {
-  font-size: 1rem;
-  line-height: 1.5;
-  color: #495057;
-}
-
-.line-through {
+  opacity: 0.7;
   text-decoration: line-through;
-  color: #adb5bd;
-  opacity: 0.8;
+  background: #f0f3f8;
+}
+.todo-item input[type="checkbox"] {
+  width: 1.2em;
+  height: 1.2em;
+  accent-color: #397cf6;
+  margin-right: 8px;
 }
 
-.edit-input {
-  flex: 1;
-  padding: 10px 14px;
-  border: 1.5px solid #6c757d;
-  border-radius: 6px;
-  font-size: 1rem;
-  background: white;
-  color: #495057; /* 수정: 텍스트 색상 명시 */
+.todo-buttons {
+  display: flex;
+  gap: 6px;
+}
+.todo-buttons button {
+  padding: 5.5px 12px;
+  background: #f1f3f7;
+  border: 1px solid #d0d3db;
+  color: #30538e;
+  border-radius: 5px;
+  font-size: 0.97rem;
+  cursor: pointer;
+  transition: background 0.13s, color 0.13s;
+}
+.todo-buttons button:hover {
+  background: #397cf6;
+  color: #fff;
+  border-color: #254fa3;
 }
 
-.edit-input:focus {
+@media (max-width: 600px) {
+  .container,
+  .time-area,
+  .quote-area {
+    max-width: 98vw;
+    min-width: 60vw;
+  }
+}
